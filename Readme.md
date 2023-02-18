@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Aleksandr Avtukhovich](https://up.htmlacademy.ru/javascript/28/user/218309).
-* Наставник: `Алексей Зольников`.
+* Наставник: [Алексей Зольников] (https://htmlacademy.ru/profile/id870391).
 
 ---
 
