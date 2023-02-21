@@ -5,9 +5,9 @@ function checkLengthString(string, maxValue) {
 checkLengthString('Строка', 8);
 
 //Функция для проверки, является ли строка палиндромом.
-function checkStringPolindrom(string) {
-  const newString = string.toLowerCase().replaceAll(' ', '');
-  return (string.split('').reverse().join('') === newString);
+function checkStringPolindrom(string){
+  const newString = string.split('').reverse().join('');
+  return (string.toLowerCase().replaceAll(' ','') === newString.toLowerCase().replaceAll(' ',''));
 }
 
 checkStringPolindrom('Топот');
