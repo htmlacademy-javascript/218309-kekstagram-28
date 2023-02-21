@@ -2,35 +2,47 @@
 function checkLengthString(string, maxValue) {
   return (string.length <= maxValue);
 }
-checkLengthString('Строка', 8);
+checkLengthString('Строка',8);
 
 //Функция для проверки, является ли строка палиндромом.
 function checkStringPolindrom(string){
   const newString = string.split('').reverse().join('');
   return (string.toLowerCase().replaceAll(' ','') === newString.toLowerCase().replaceAll(' ',''));
 }
-
 checkStringPolindrom('Топот');
 
 /*Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9
 и возвращает их в виде целого положительного числа.
 Если в строке нет ни одной цифры, функция должна вернуть NaN:*/
-function getNumbers(string) {
-  // eslint-disable-next-line radix
-  return parseInt(string.toString().replace(/\D/g,''));
+function getNumbers(string){
+  let newNumber = '';
+  if(string === Number(string)){
+    return Math.abs(string);
+  }else{
+    for(let i = 0;i < string.length;i++){
+      // eslint-disable-next-line eqeqeq
+      if(string[i] == Number(string[i]) && string[i] !== ' '){
+        newNumber += string[i];
+      }
+    }
+    if(newNumber === ''){
+      return NaN;
+    }
+    return Number(newNumber);
+  }
 }
 getNumbers('год 2023');
 
 /*
 Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами— и возвращает исходную строку, дополненную указанными символами до заданной длины. Символы добавляются в начало строки. Если исходная строка превышает заданную длину, она не должна обрезаться. Если «добивка» слишком длинная, она обрезается с конца.
 */
-function func(str, minLength, addStr) {
-  if (str.length >= minLength) {
+function func(str,minLength,addStr){
+  if(str.length >= minLength){
     return str;
   }
   const preffixLength = minLength - str.length;
   const sample = addStr;
-  while (addStr.length < preffixLength - sample.length) {
+  while (addStr.length < preffixLength - sample.length){
     addStr += addStr;
   }
   return sample.slice(0, preffixLength - addStr.length) + addStr + str;
