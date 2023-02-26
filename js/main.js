@@ -41,6 +41,7 @@ function getRandomNum(min, max) {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 }
+/*
 function createRandomId(min, max) {
   const previousValues = [];
 
@@ -56,6 +57,7 @@ function createRandomId(min, max) {
     return currentValue;
   };
 }
+*/
 
 /*
 //Случайный элемент массива
@@ -63,13 +65,13 @@ const getRandomArrayElement = (elements) => {
   return elements[getRandom(0,elements.length - 1)];
 };
 */
-const usersCommentsId = createRandomId(50, 200);
+//const usersCommentsId = createRandomId(50, 200);
 //Функция для создания списка комментариев
-const createUsersPhotoComments = () => {
+const createUsersPhotoComments = (i) => {
   const usersCommentsMessage = getRandomNum(0, message.length - 1);
   const usersCommentsName = getRandomNum(0, usersName.length - 1);
   return {
-    id: usersCommentsId(),
+    id: i,
     avatar: `img/avatar-${getRandomNum(1, 6)}.svg`,
     message: message[usersCommentsMessage],
     name: usersName[usersCommentsName]
@@ -79,23 +81,24 @@ const createUsersPhotoComments = () => {
 //создаем массив объектов списка комментариев
 //const generateUsersPhotoCommenets = Array.from({ length: getRandomNum(1, 5) }, createUsersPhotoComments);
 
-const userRandomId = createRandomId(1, 25);
-const userRandomUrl = createRandomId(1, 25);
+//const userRandomId = createRandomId(1, 25);
+//const userRandomUrl = createRandomId(1, 25);
 //начинаем с функции по созданию объекта
-const createUserPhotoDescription = () => {
+const createUserPhotoDescription = (i) => {
   const userRandomDescription = getRandomNum(0, description.length - 1);
   const userRandomLikes = getRandomNum(15, 200);
   return {
-    id: userRandomId(),
-    url: `photos/${userRandomUrl()}.jpg`,
+    id: i,
+    url: `photos/${i}.jpg`,
     description: description[userRandomDescription],
     likes: userRandomLikes,
-    comments: Array.from({length: getRandomNum(1,5)},createUsersPhotoComments),
+    comments: Array.from({length: getRandomNum(1,5)},(el,key) => createUsersPhotoComments(parseInt(i.toString() + 0 + key.toString(),10))),
   };
 };
 
 //создаем массив объектов с описанием фотографий
-const generateUserPhotoDescription = Array.from({ length: 25 }, createUserPhotoDescription);
+const generateUserPhotoDescription = Array.from({ length: 25 },(el,key) => createUserPhotoDescription(key));
 
 //console.log(createUserPhotoDescription());
-console.log(generateUserPhotoDescription);
+//console.log(generateUserPhotoDescription);
+generateUserPhotoDescription();
