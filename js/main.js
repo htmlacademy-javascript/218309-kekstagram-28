@@ -66,10 +66,11 @@ const getRandomArrayElement = (elements) => {
 
 //Функция для создания списка комментариев
 const createUsersPhotoComments = () => {
+  const usersCommentsId = createRandomId(50, 200);
   const usersCommentsMessage = getRandomNum(0, message.length - 1);
   const usersCommentsName = getRandomNum(0, usersName.length - 1);
   return {
-    id: getRandomNum(1, 200),
+    id: usersCommentsId(),
     avatar: `img/avatar-${getRandomNum(1, 6)}.svg`,
     message: message[usersCommentsMessage],
     name: usersName[usersCommentsName]
@@ -77,7 +78,7 @@ const createUsersPhotoComments = () => {
 };
 
 //создаем массив объектов списка комментариев
-const generateUsersPhotoCommenets = Array.from({ length: getRandomNum(1, 5) }, createUsersPhotoComments);
+//const generateUsersPhotoCommenets = Array.from({ length: getRandomNum(1, 5) }, createUsersPhotoComments);
 
 //начинаем с функции по созданию объекта
 const createUserPhotoDescription = () => {
@@ -90,7 +91,12 @@ const createUserPhotoDescription = () => {
     url: `photos/${userRandomUrl()}.jpg`,
     description: description[userRandomDescription],
     likes: userRandomLikes,
-    comments: generateUsersPhotoCommenets,
+    comments: Array.from({length: getRandomNum(1,5)},createUsersPhotoComments),
   };
 };
+
+//создаем массив объектов с описанием фотографий
+const generateUserPhotoDescription = Array.from({ length: 25 }, createUserPhotoDescription);
+
 //console.log(createUserPhotoDescription());
+console.log(generateUserPhotoDescription);
