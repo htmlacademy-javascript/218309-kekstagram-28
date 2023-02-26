@@ -63,10 +63,9 @@ const getRandomArrayElement = (elements) => {
   return elements[getRandom(0,elements.length - 1)];
 };
 */
-
+const usersCommentsId = createRandomId(50, 200);
 //Функция для создания списка комментариев
 const createUsersPhotoComments = () => {
-  const usersCommentsId = createRandomId(50, 200);
   const usersCommentsMessage = getRandomNum(0, message.length - 1);
   const usersCommentsName = getRandomNum(0, usersName.length - 1);
   return {
@@ -80,10 +79,10 @@ const createUsersPhotoComments = () => {
 //создаем массив объектов списка комментариев
 //const generateUsersPhotoCommenets = Array.from({ length: getRandomNum(1, 5) }, createUsersPhotoComments);
 
+const userRandomId = createRandomId(1, 25);
+const userRandomUrl = createRandomId(1, 25);
 //начинаем с функции по созданию объекта
 const createUserPhotoDescription = () => {
-  const userRandomId = createRandomId(1, 25);
-  const userRandomUrl = createRandomId(1, 25);
   const userRandomDescription = getRandomNum(0, description.length - 1);
   const userRandomLikes = getRandomNum(15, 200);
   return {
