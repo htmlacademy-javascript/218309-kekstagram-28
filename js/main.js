@@ -1,5 +1,4 @@
-
-const message = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -7,8 +6,7 @@ const message = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
-
-const usersName = [
+const NAMES = [
   'Александр',
   'Андрей',
   'Артём',
@@ -20,85 +18,43 @@ const usersName = [
   'Оля',
   'Юля'
 ];
-
-const description =
-  [
-    'Нет никаких правил для хороших фотографий, есть только хорошие фотографии',
-    'Если у меня и есть что сказать новичку, то это то, что в фотографии нет коротких путей',
-    'Конечно, все дело в удаче',
-    'В каждой фотографии всегда есть два человека: фотограф и зритель',
-    'Для меня фотография – это искусство наблюдения',
-    'Мир просто не укладывается в формат 35-мм камеры',
-    'Послушайте, я не интеллигент - я просто фотографирую',
-    'Для фотографа важнее иметь очень хорошую обувь, чем очень хорошую камеру',
-    'Покупка Nikon не делает вас фотографом. Она делает вас владельцем Nikon',
-    'Фотография подбирает факт из жизни, и он будет жить вечно'
-  ];
+const DESCRIPTIONS = [
+  'Нет никаких правил для хороших фотографий, есть только хорошие фотографии',
+  'Если у меня и есть что сказать новичку, то это то, что в фотографии нет коротких путей',
+  'Конечно, все дело в удаче',
+  'В каждой фотографии всегда есть два человека: фотограф и зритель',
+  'Для меня фотография – это искусство наблюдения',
+  'Мир просто не укладывается в формат 35-мм камеры',
+  'Послушайте, я не интеллигент - я просто фотографирую',
+  'Для фотографа важнее иметь очень хорошую обувь, чем очень хорошую камеру',
+  'Покупка Nikon не делает вас фотографом. Она делает вас владельцем Nikon',
+  'Фотография подбирает факт из жизни, и он будет жить вечно'
+];
 
 function getRandomNum(min, max) {
   const lower = Math.ceil(min);
   const upper = Math.floor(max);
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
+  return Math.floor(Math.random() * (upper - lower + 1) + lower);
 }
-/*
-function createRandomId(min, max) {
-  const previousValues = [];
 
-  return function () {
-    let currentValue = getRandomNum(min, max);
-    if (previousValues.length >= max - min + 1) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomNum(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-}
-*/
-
-/*
-//Случайный элемент массива
-const getRandomArrayElement = (elements) => {
-  return elements[getRandom(0,elements.length - 1)];
-};
-*/
-//const usersCommentsId = createRandomId(50, 200);
 //Функция для создания списка комментариев
-const createUsersPhotoComments = (i) => {
-  const usersCommentsMessage = getRandomNum(0, message.length - 1);
-  const usersCommentsName = getRandomNum(0, usersName.length - 1);
-  return {
-    id: i,
-    avatar: `img/avatar-${getRandomNum(1, 6)}.svg`,
-    message: message[usersCommentsMessage],
-    name: usersName[usersCommentsName]
-  };
-};
+const createUsersPhotoComments = (id) => ({
+  id,
+  avatar: `img/avatar-${getRandomNum(1, 6)}.svg`,
+  message: MESSAGES[getRandomNum(0, MESSAGES.length - 1)],
+  name: NAMES[getRandomNum(0, NAMES.length - 1)]
+});
 
-//создаем массив объектов списка комментариев
-//const generateUsersPhotoCommenets = Array.from({ length: getRandomNum(1, 5) }, createUsersPhotoComments);
-
-//const userRandomId = createRandomId(1, 25);
-//const userRandomUrl = createRandomId(1, 25);
 //начинаем с функции по созданию объекта
-const createUserPhotoDescription = (i) => {
-  const userRandomDescription = getRandomNum(0, description.length - 1);
-  const userRandomLikes = getRandomNum(15, 200);
-  return {
-    id: i,
-    url: `photos/${i}.jpg`,
-    description: description[userRandomDescription],
-    likes: userRandomLikes,
-    comments: Array.from({length: getRandomNum(1,5)},(el,key) => createUsersPhotoComments(parseInt(i.toString() + 0 + key.toString(),10))),
-  };
-};
+const createUserPhotoDescription = (id) => ({
+  id,
+  url: `photos/${id}.jpg`,
+  description: DESCRIPTIONS[getRandomNum(0, DESCRIPTIONS.length - 1)],
+  likes: getRandomNum(15, 200),
+  comments: Array.from({length: getRandomNum(1,5)},(_,key) => createUsersPhotoComments(parseInt(id.toString() + 0 + key.toString(),10))),
+});
 
 //создаем массив объектов с описанием фотографий
-const generateUserPhotoDescription = Array.from({ length: 25 },(el,key) => createUserPhotoDescription(key));
+const generateUserPhotoDescription = Array.from({ length: 25 },(_,key) => createUserPhotoDescription(key));
 
-//console.log(createUserPhotoDescription());
-//console.log(generateUserPhotoDescription);
 generateUserPhotoDescription();
