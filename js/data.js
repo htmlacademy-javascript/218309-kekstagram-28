@@ -1,5 +1,6 @@
 //модуль, который создаёт данные.
-import {getRandomNum} from './util.js';
+import { getRandomNum } from './util.js';
+
 const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -47,10 +48,10 @@ const createUserPhotoDescription = (id) => ({
   url: `photos/${id}.jpg`,
   description: DESCRIPTIONS[getRandomNum(0, DESCRIPTIONS.length - 1)],
   likes: getRandomNum(15, 200),
-  comments: Array.from({length: getRandomNum(1,5)},(_,key) => createUsersPhotoComments(parseInt(id.toString() + 0 + key.toString(),10))),
+  comments: Array.from({ length: getRandomNum(1, 5) }, (_, key) => createUsersPhotoComments(parseInt(id.toString() + 0 + key.toString(), 10))),
 });
 
 //создаем массив объектов с описанием фотографий
-const generateUserPhotoDescription = () => Array.from({ length: 25 },(_,key) => createUserPhotoDescription(key));
+const generateUserPhotoDescription = () => Array.from({ length: 25 }, (_, key) => createUserPhotoDescription(key));
 
-export {generateUserPhotoDescription};
+export { generateUserPhotoDescription };
