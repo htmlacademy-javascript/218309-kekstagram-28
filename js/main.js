@@ -1,4 +1,4 @@
 import { generateUserPhotoDescription } from './data.js';
 
-generateUserPhotoDescription(10);
+generateUserPhotoDescription(25);
 
