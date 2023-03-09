@@ -13,7 +13,7 @@ const createUsersPhotoComments = (id) => ({
 //начинаем с функции по созданию объекта
 const createUserPhotoDescription = (id) => ({
   id,
-  url: `photos/${id}.jpg`,
+  url: `photos/${id + 1}.jpg`,
   description: DESCRIPTIONS[getRandomNum(0, DESCRIPTIONS.length - 1)],
   likes: getRandomNum(15, 200),
   comments: Array.from({ length: getRandomNum(1, 5) }, (_, key) => createUsersPhotoComments(parseInt(id.toString() + 0 + key.toString(), 10))),

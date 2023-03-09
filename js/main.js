@@ -1,4 +1,3 @@
-import { generateUserPhotoDescription } from './data.js';
-
-generateUserPhotoDescription(25);
+import { createPost } from './display-picture-users.js';
+createPost();
 
