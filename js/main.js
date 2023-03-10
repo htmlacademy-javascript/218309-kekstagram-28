@@ -1,3 +1,2 @@
-import { createPost } from './display-picture-users.js';
+import { createPost } from './thumbnail.js';
 createPost();
-
