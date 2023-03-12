@@ -1,4 +1,4 @@
 import { generateUserPhotoDescription } from './data.js';
+import { createPost } from './thumbnail.js';
 
-generateUserPhotoDescription();
-
+createPost(generateUserPhotoDescription(10));
