@@ -20,6 +20,6 @@ const createUserPhotoDescription = (id) => ({
 });
 
 //создаем массив объектов с описанием фотографий
-const generateUserPhotoDescription = (count) => Array.from({ length: count }, (_, key) => createUserPhotoDescription(key));
+const generateUserPhotoDescription = () => Array.from({ length: 25 }, (_, key) => createUserPhotoDescription(key));
 
 export { generateUserPhotoDescription };

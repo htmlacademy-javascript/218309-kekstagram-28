@@ -1,3 +1,5 @@
+import { generateUserPhotoDescription } from './data.js';
+
 const pictures = document.querySelector('.pictures');
 const pictureUsersTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesFragment = document.createDocumentFragment();
@@ -12,9 +14,12 @@ const createPost = ((post) => {
   return pictureElement;
 });
 
-const renderPosts = (similarPictures) => {
+const renderPost = (similarPictures) => {
   similarPictures.forEach((post) => picturesFragment.append(createPost(post)));
 
   pictures.append(picturesFragment);
 };
+
+const renderPosts = renderPost(generateUserPhotoDescription());
+
 export { renderPosts };
