@@ -7,7 +7,7 @@ const picturesFragment = document.createDocumentFragment();
 const createPost = ((post) => {
   const pictureElement = pictureUsersTemplate.cloneNode(true);
   pictureElement.querySelector('.picture__img').src = post.url;
-  pictureElement.querySelector('.picture__img').alt = 'Случайная фотография';
+  pictureElement.querySelector('.picture__img').alt = post.description;
   pictureElement.querySelector('.picture__comments').textContent = post.comments.length;
   pictureElement.querySelector('.picture__likes').textContent = post.likes;
 
@@ -22,4 +22,7 @@ const renderPost = (similarPictures) => {
 
 const renderPosts = renderPost(generateUserPhotoDescription());
 
+// function renderPosts () {
+//   renderPost(generateUserPhotoDescription());
+// }
 export { renderPosts };
