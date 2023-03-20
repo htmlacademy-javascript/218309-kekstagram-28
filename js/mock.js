@@ -16,7 +16,7 @@ const createUserPhotoDescription = (id) => ({
   url: `photos/${id + 1}.jpg`,
   description: DESCRIPTIONS[getRandomNum(0, DESCRIPTIONS.length - 1)],
   likes: getRandomNum(15, 200),
-  comments: Array.from({ length: getRandomNum(1, 5) }, (_, key) => createUsersPhotoComments(parseInt(id.toString() + 0 + key.toString(), 10))),
+  comments: Array.from({ length: getRandomNum(1, 15) }, (_, key) => createUsersPhotoComments(parseInt(id.toString() + 0 + key.toString(), 10))),
 });
 
 //создаем массив объектов с описанием фотографий

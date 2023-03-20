@@ -7,9 +7,6 @@ export const addEventListener = (similarPictures) => {
   const bigPicture = document.querySelector('.big-picture');
   const bigPictureCloseElement = document.querySelector('.big-picture__cancel');
 
-  const socialCommentCount = document.querySelector('.social__comment-count');
-  const commentsLoader = document.querySelector('.comments-loader');
-
   const elBody = document.querySelector('body');
 
   picturesElement.addEventListener('click', (e) => {
@@ -34,8 +31,8 @@ export const addEventListener = (similarPictures) => {
     bigPicture.classList.remove('hidden');
     bigPicture.querySelector('.big-picture__img img').src = post.url;
     bigPicture.querySelector('.likes-count').textContent = post.likes;
-    bigPicture.querySelector('.comments-count').textContent = post.comments.length;
     bigPicture.querySelector('.social__caption').textContent = post.description;
+
 
     const commentElement = commentsElement.querySelector('.social__comment').cloneNode(true);
 
@@ -43,16 +40,39 @@ export const addEventListener = (similarPictures) => {
       commentsElement.removeChild(commentsElement.firstChild);
     }
 
-    post.comments.forEach((comment) => {
-      const commentEl = commentElement.cloneNode(true);
-      commentEl.querySelector('.social__picture').src = comment.avatar;
-      commentEl.querySelector('.social__picture').alt = comment.name;
-      commentEl.querySelector('.social__text').textContent = comment.message;
-      commentsElement.append(commentEl);
-    });
+    const commentsLoader = document.querySelector('.social__comments-loader');
+    const socialCommentCount = document.querySelector('.social__comment-count');
 
-    socialCommentCount.classList.add('hidden');
-    commentsLoader.classList.add('hidden');
+    let loadingComments = 0;
+    const COMMENTS_PER_PORTION = 5;
+
+    const renderComments = () => {
+      loadingComments += COMMENTS_PER_PORTION;
+      commentsElement.innerHTML = '';
+      const commentsToShow = Math.min(post.comments.length, loadingComments);
+
+      post.comments.forEach((comment, index) => {
+        if (index < commentsToShow) {
+          const commentEl = commentElement.cloneNode(true);
+          commentEl.querySelector('.social__picture').src = comment.avatar;
+          commentEl.querySelector('.social__picture').alt = comment.name;
+          commentEl.querySelector('.social__text').textContent = comment.message;
+          socialCommentCount.textContent = `${commentsToShow} из ${post.comments.length} комментариев`;
+
+          if (loadingComments >= post.comments.length) {
+            commentsLoader.classList.add('hidden');
+            loadingComments = post.comments.length;
+            // есть вопрос по удалению события и комментариев(они накапливаются)
+            commentsLoader.removeEventListener('click', renderComments);
+          } else {
+            commentsLoader.classList.remove('hidden');
+            commentsLoader.addEventListener('click', renderComments);
+          }
+          commentsElement.append(commentEl);
+        }
+      });
+    };
+    renderComments();
 
     elBody.classList.add('modal-open');
 
@@ -67,3 +87,4 @@ export const addEventListener = (similarPictures) => {
   }
   bigPictureCloseElement.addEventListener('click', closeBigPicture);
 };
+
