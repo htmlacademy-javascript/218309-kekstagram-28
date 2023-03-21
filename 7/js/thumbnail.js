@@ -1,4 +1,4 @@
-import { addEventListener } from './big-picture.js';
+import { renderBigPicture } from './big-picture.js';
 
 
 const pictures = document.querySelector('.pictures');
@@ -19,7 +19,7 @@ const renderPosts = (similarPictures) => {
   similarPictures.forEach((post) => picturesFragment.append(createPost(post)));
 
   pictures.append(picturesFragment);
-  addEventListener(similarPictures);
+  renderBigPicture(similarPictures);
 };
 
 export { renderPosts };
