@@ -1,6 +1,6 @@
 import { isEscapeKey } from './util.js';
 
-export const addEventListener = (similarPictures) => {
+export const renderBigPicture = (similarPictures) => {
   const picturesElement = document.querySelector('.pictures');
   const pictureElements = document.querySelectorAll('.picture');
   const commentsElement = document.querySelector('.social__comments');
@@ -48,7 +48,11 @@ export const addEventListener = (similarPictures) => {
 
     const renderComments = () => {
       loadingComments += COMMENTS_PER_PORTION;
-      commentsElement.innerHTML = '';
+
+      while (commentsElement.firstChild) {
+        commentsElement.removeChild(commentsElement.firstChild);
+      }
+
       const commentsToShow = Math.min(post.comments.length, loadingComments);
 
       post.comments.forEach((comment, index) => {
@@ -62,7 +66,6 @@ export const addEventListener = (similarPictures) => {
           if (loadingComments >= post.comments.length) {
             commentsLoader.classList.add('hidden');
             loadingComments = post.comments.length;
-            // есть вопрос по удалению события и комментариев(они накапливаются)
             commentsLoader.removeEventListener('click', renderComments);
           } else {
             commentsLoader.classList.remove('hidden');
