@@ -1,4 +1,3 @@
-
 const imgUploadFile = document.querySelector('#upload-file');
 const imgUploadOpen = document.querySelector('.img-upload__overlay');
 const imgUploadClose = document.querySelector('.img-upload__cancel');
@@ -12,17 +11,6 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__error-text',
 });
-
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    console.log('Можно отправлять');
-  } else {
-    console.log(' Не Можно отправлять');
-  }
-});
-
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -61,7 +49,6 @@ const stopPropagation = (evt) => {
 textDescription.addEventListener('keydown', stopPropagation);
 textHashtags.addEventListener('keydown', stopPropagation);
 
-//-------RegExp--------------
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TEXT_TAG = 'Хэш-теги записаны неверно';
 
@@ -87,4 +74,17 @@ pristine.addValidator(
   validateTags,
   ERROR_TEXT_TAG,
 );
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (isValid) {
+    // uploadForm.submit();
+    console.log('Можно отправлять');
+  } else {
+    console.log(' Не Можно отправлять');
+  }
+};
+
+uploadForm.addEventListener('submit', onFormSubmit);
 
