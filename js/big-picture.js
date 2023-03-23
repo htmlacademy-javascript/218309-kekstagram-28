@@ -1,6 +1,6 @@
 import { isEscapeKey } from './util.js';
 
-export const addEventListener = (similarPictures) => {
+export const renderBigPicture = (similarPictures) => {
   const picturesElement = document.querySelector('.pictures');
   const pictureElements = document.querySelectorAll('.picture');
   const commentsElement = document.querySelector('.social__comments');
