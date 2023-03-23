@@ -10,11 +10,11 @@ export const addEventListener = (similarPictures) => {
   const elBody = document.querySelector('body');
 
   picturesElement.addEventListener('click', (e) => {
-    e.preventDefault();
     const currentElement = e.target.parentElement;
     const arr = Array.from(pictureElements);
     const index = arr.indexOf(currentElement);
     if (index >= 0) {
+      e.preventDefault();
       openBigPicture(similarPictures[index]);
     }
 
