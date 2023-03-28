@@ -58,7 +58,7 @@ noUiSlider.create(effectSlider, {
     min: 0,
     max: 1,
   },
-  start: 0.8,
+  start: 1,
   step: 0.1,
   connect: 'lower',
 });

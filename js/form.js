@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, showAlert } from './util.js';
 import { resetScale } from './scale.js';
 import './slider.js';
 
@@ -25,7 +25,7 @@ const onUploadEscKeydown = (evt) => {
   }
 };
 
-function closeUploadPicture() {
+export function closeUploadPicture() {
   resetScale();
   // resetEffects();
   uploadForm.reset();
@@ -35,7 +35,7 @@ function closeUploadPicture() {
   elBody.classList.remove('modal-open');
 }
 
-function openUpLoadPicture() {
+export function openUpLoadPicture() {
   imgUploadOpen.classList.remove('hidden');
   elBody.classList.add('modal-open');
   document.addEventListener('keydown', onUploadEscKeydown);
@@ -79,15 +79,58 @@ export const validateForm = () => {
   );
 };
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    // uploadForm.submit();
-    // console.log('Можно отправлять');
-  } else {
-    // console.log(' Не Можно отправлять');
-  }
-};
+// const onFormSubmit = (evt) => {
+//   evt.preventDefault();
+//   const isValid = pristine.validate();
+//   if (isValid) {
+//     const formData = new FormData(evt.target);
 
-uploadForm.addEventListener('submit', onFormSubmit);
+//     fetch(
+//       'https://28.javascript.pages.academy/kekstagram',
+//       {
+//         method: 'POST',
+//         body: formData,
+//       },
+//     ).then(() => onSuccess());
+//     // uploadForm.submit();
+//     // console.log('Можно отправлять');
+//   } else {
+//     // console.log(' Не Можно отправлять');
+//   }
+// };
+
+// uploadForm.addEventListener('submit', onFormSubmit);
+
+// ------Отправка формы------
+
+export const setUploadFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      const formData = new FormData(evt.target);
+
+      fetch(
+        'https://28.javascript.pages.academy/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      ).then((responce) => {
+        if (responce.ok) {
+          onSuccess();
+        } else {
+          showAlert('Не удалось отправить форму. Попробуй ещё раз');
+        }
+      })
+        .catch(() => {
+          showAlert('Не удалось отправить форму. Попробуй ещё раз');
+        });
+      // uploadForm.submit();
+      // console.log('Можно отправлять');
+    } else {
+      // console.log(' Не Можно отправлять');
+    }
+  });
+};
