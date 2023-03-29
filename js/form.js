@@ -1,6 +1,7 @@
 import { isEscapeKey, showAlert } from './util.js';
 import { resetScale } from './scale.js';
 import './slider.js';
+import { sendData } from './api.js';
 
 const imgUploadFile = document.querySelector('#upload-file');
 const imgUploadOpen = document.querySelector('.img-upload__overlay');
@@ -109,28 +110,15 @@ export const setUploadFormSubmit = (onSuccess) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      const formData = new FormData(evt.target);
+      sendData(
+        () => onSuccess(),
+        () => showAlert(),
+        new FormData(evt.target),
+      );
 
-      fetch(
-        'https://28.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      ).then((responce) => {
-        if (responce.ok) {
-          onSuccess();
-        } else {
-          showAlert('Не удалось отправить форму. Попробуй ещё раз');
-        }
-      })
-        .catch(() => {
-          showAlert('Не удалось отправить форму. Попробуй ещё раз');
-        });
       // uploadForm.submit();
-      // console.log('Можно отправлять');
-    } else {
-      // console.log(' Не Можно отправлять');
+    // } else {
+    //   // console.log(' Не Можно отправлять');
     }
   });
 };
