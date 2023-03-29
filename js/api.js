@@ -1,14 +1,36 @@
+import { showAlert } from './util.js';
+
+const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/',
+};
+const ErrorText = {
+  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
+  SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
+};
+
 const getData = (onSuccess) => {
-  fetch('https://28.javascript.pages.academy/kekstagram/data')
-    .then((response) => response.json())
+  fetch(
+    `${BASE_URL}${Route.GET_DATA}`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        showAlert(`${ErrorText.GET_DATA}`);
+      }
+      return response.json();
+    })
     .then((generateUserPhotoDescription) => {
       onSuccess(generateUserPhotoDescription);
+    })
+    .catch(() => {
+      showAlert(`${ErrorText.GET_DATA}`);
     });
 };
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://28.javascript.pages.academy/kekstagram',
+    `${BASE_URL}${Route.SEND_DATA}`,
     {
       method: 'POST',
       body,
@@ -17,11 +39,11 @@ const sendData = (onSuccess, onFail, body) => {
     if (responce.ok) {
       onSuccess();
     } else {
-      onFail('Не удалось отправить форму. Попробуй ещё раз');
+      onFail(`${ErrorText.SEND_DATA}`);
     }
   })
     .catch(() => {
-      onFail('Не удалось отправить форму. Попробуй ещё раз');
+      onFail(`${ErrorText.SEND_DATA}`);
     });
 };
 

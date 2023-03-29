@@ -12,6 +12,7 @@ const textDescription = uploadForm.querySelector('.text__description');
 const textHashtags = uploadForm.querySelector('.text__hashtags');
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TEXT_TAG = 'Хэш-теги записаны неверно';
+const submitButton = document.querySelector('#upload-submit');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -80,39 +81,35 @@ export const validateForm = () => {
   );
 };
 
-// const onFormSubmit = (evt) => {
-//   evt.preventDefault();
-//   const isValid = pristine.validate();
-//   if (isValid) {
-//     const formData = new FormData(evt.target);
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Опубликовываю...';
+};
 
-//     fetch(
-//       'https://28.javascript.pages.academy/kekstagram',
-//       {
-//         method: 'POST',
-//         body: formData,
-//       },
-//     ).then(() => onSuccess());
-//     // uploadForm.submit();
-//     // console.log('Можно отправлять');
-//   } else {
-//     // console.log(' Не Можно отправлять');
-//   }
-// };
-
-// uploadForm.addEventListener('submit', onFormSubmit);
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
 
 // ------Отправка формы------
 
 export const setUploadFormSubmit = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
-
     evt.preventDefault();
+
     const isValid = pristine.validate();
     if (isValid) {
+      // showSuccessMessage();
+      blockSubmitButton();
       sendData(
-        () => onSuccess(),
-        () => showAlert(),
+        () => {
+          onSuccess();
+          unblockSubmitButton();
+        },
+        () => {
+          showAlert('Не удалось отправить форму. Попробуй ещё раз');
+          unblockSubmitButton();
+        },
         new FormData(evt.target),
       );
 

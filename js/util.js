@@ -17,7 +17,7 @@ const showAlert = (message) => {
   alertBlock.style.left = 0;
   alertBlock.style.right = 0;
   alertBlock.style.padding = '10px 3px';
-  alertBlock.style.fontSize = '30px';
+  alertBlock.style.fontSize = '26px';
   alertBlock.style.textAlign = 'center';
   alertBlock.style.backgroundColor = 'red';
 
