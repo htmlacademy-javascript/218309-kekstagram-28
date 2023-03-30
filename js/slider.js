@@ -69,3 +69,5 @@ effectsEl.addEventListener('change', changeEffect);
 
 // }
 
+// --------- всё новое --------
+// export{resetEffects}

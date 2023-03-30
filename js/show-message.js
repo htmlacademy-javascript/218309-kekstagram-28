@@ -18,7 +18,8 @@ export const showSuccessMessage = () => {
 
   document.addEventListener('click', (evt) => {
     const clickTarget = evt.target;
-    if (!clickTarget.closest('.success') && !clickTarget.closest('.success__button')) {
+    if (!clickTarget.closest('.success__inner') && !clickTarget.closest('.error__inner')) {
+      console.log('YES');
       closeMessage();
     }
   });
