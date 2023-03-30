@@ -2,6 +2,7 @@ import { isEscapeKey, showAlert } from './util.js';
 import { resetScale } from './scale.js';
 import './slider.js';
 import { sendData } from './api.js';
+import { showSuccessMessage } from './show-message.js';
 
 const imgUploadFile = document.querySelector('#upload-file');
 const imgUploadOpen = document.querySelector('.img-upload__overlay');
@@ -97,9 +98,10 @@ export const setUploadFormSubmit = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
+    showSuccessMessage();
+
     const isValid = pristine.validate();
     if (isValid) {
-      // showSuccessMessage();
       blockSubmitButton();
       sendData(
         () => {
