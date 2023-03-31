@@ -1,6 +1,6 @@
 import { isEscapeKey, showAlert } from './util.js';
 import { resetScale } from './scale.js';
-import './slider.js';
+import { resetEffects } from './slider.js';
 import { sendData } from './api.js';
 import { showSuccessMessage } from './show-message.js';
 
@@ -30,7 +30,7 @@ const onUploadEscKeydown = (evt) => {
 
 export function closeUploadPicture() {
   resetScale();
-  // resetEffects();
+  resetEffects();
   uploadForm.reset();
   pristine.reset();
   imgUploadOpen.classList.add('hidden');
@@ -116,8 +116,8 @@ export const setUploadFormSubmit = (onSuccess) => {
       );
 
       // uploadForm.submit();
-    // } else {
-    //   // console.log(' Не Можно отправлять');
+      // } else {
+      //   // console.log(' Не Можно отправлять');
     }
   });
 };

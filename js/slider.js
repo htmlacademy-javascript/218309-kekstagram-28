@@ -1,73 +1,75 @@
+import { EFFECTS } from './data.js';
+
 const effectSlider = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const imgEffectLevel = document.querySelector('.img-upload__effect-level');
-
-// const effectsList = document.querySelector('.effects__list');
-// const effectsRadio = effectsList.querySelectorAll('.effects__radio');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const effectsEl = document.querySelector('.effects');
 
-imgEffectLevel.classList.add('hidden');
+const DEFAULT_EFFECT = EFFECTS[0];
+let chosenEffect = DEFAULT_EFFECT;
 
-const updateSlider = () => {
-  effectSlider.noUiSlider.on('update', () => {
-    effectLevelValue.value = effectSlider.noUiSlider.get();
-    switch (imgUploadPreview.className) {
-      case 'effects__preview--chrome':
-        imgEffectLevel.classList.remove('hidden');
-        imgUploadPreview.style.filter = `grayscale(${effectLevelValue.value})`;
-        break;
-      case 'effects__preview--sepia':
-        imgEffectLevel.classList.remove('hidden');
-        imgUploadPreview.style.filter = `sepia(${effectLevelValue.value})`;
-        break;
-      case 'effects__preview--marvin':
-        // effectSlider.noUiSlider.updateOptions({
-        //   range: {
-        //     min: 0,
-        //     max: 100,
-        //   },
-        //   step: 1,
-        // });
-        imgUploadPreview.style.filter = `invert(${effectLevelValue.value * 100}%)`;
-        break;
-      case 'effects__preview--phobos':
-        imgUploadPreview.style.filter = `blur(${effectLevelValue.value * 3}px)`;
-        break;
-      case 'effects__preview--heat':
-        imgUploadPreview.style.filter = `brightness(${effectLevelValue.value * 3})`;
-        break;
-      default:
-        imgUploadPreview.style.filter = '';
-        imgEffectLevel.classList.add('hidden');
-        break;
-    }
-  });
+const isDefault = () => chosenEffect === DEFAULT_EFFECT;
+
+const showSlider = () => {
+  imgEffectLevel.classList.remove('hidden');
 };
 
-function changeEffect(evt) {
+const hideSlider = () => {
+  imgEffectLevel.classList.add('hidden');
+};
+
+const updateSlider = () => {
+  effectSlider.noUiSlider.updateOptions({
+    range: {
+      min: chosenEffect.min,
+      max: chosenEffect.max,
+    },
+    start: chosenEffect.max,
+    step: chosenEffect.step,
+  });
+  if (isDefault()) {
+    hideSlider();
+  } else {
+    showSlider();
+  }
+};
+
+const onChangeEffect = (evt) => {
   if (!evt.target.classList.contains('effects__radio')) {
     return;
   }
-  imgUploadPreview.className = `effects__preview--${evt.target.value}`;
+  chosenEffect = EFFECTS.find((effect) => effect.name === evt.target.value);
+  imgUploadPreview.className = `effects__preview--${chosenEffect.name}`;
   updateSlider();
-}
+};
+
+const onSliderUpdate = () => {
+  const sliderValue = effectSlider.noUiSlider.get();
+  imgUploadPreview.style.filter = isDefault()
+    ? DEFAULT_EFFECT.style
+    : `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
+  effectLevelValue.value = sliderValue;
+};
+
+const resetEffects = () => {
+  chosenEffect = DEFAULT_EFFECT;
+  updateSlider();
+};
 
 noUiSlider.create(effectSlider, {
   range: {
-    min: 0,
-    max: 1,
+    min: DEFAULT_EFFECT.min,
+    max: DEFAULT_EFFECT.max,
   },
-  start: 1,
-  step: 0.1,
+  start: DEFAULT_EFFECT.max,
+  step: DEFAULT_EFFECT.step,
   connect: 'lower',
 });
 
-effectsEl.addEventListener('change', changeEffect);
+hideSlider();
 
-// const resetEffects = () => {
+effectsEl.addEventListener('change', onChangeEffect);
+effectSlider.noUiSlider.on('update', onSliderUpdate);
 
-// }
-
-// --------- всё новое --------
-// export{resetEffects}
+export { resetEffects };
