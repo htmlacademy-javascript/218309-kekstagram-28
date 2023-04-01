@@ -1,4 +1,4 @@
-import { isEscapeKey, showAlert } from './util.js';
+import { isEscapeKey, } from './util.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './slider.js';
 import { sendData } from './api.js';
