@@ -2,7 +2,7 @@ import { isEscapeKey, showAlert } from './util.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './slider.js';
 import { sendData } from './api.js';
-import { showSuccessMessage } from './show-message.js';
+import { showSuccessMessage, showErrorMessage } from './show-message.js';
 
 const imgUploadFile = document.querySelector('#upload-file');
 const imgUploadOpen = document.querySelector('.img-upload__overlay');
@@ -21,7 +21,7 @@ const pristine = new Pristine(uploadForm, {
   errorTextClass: 'img-upload__error-text',
 });
 
-const onUploadEscKeydown = (evt) => {
+export const onUploadEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUploadPicture();
@@ -98,8 +98,6 @@ export const setUploadFormSubmit = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    showSuccessMessage();
-
     const isValid = pristine.validate();
     if (isValid) {
       blockSubmitButton();
@@ -107,17 +105,19 @@ export const setUploadFormSubmit = (onSuccess) => {
         () => {
           onSuccess();
           unblockSubmitButton();
+
+          showSuccessMessage();
         },
         () => {
-          showAlert('Не удалось отправить форму. Попробуй ещё раз');
+          // showAlert('Не удалось отправить форму. Попробуй ещё раз');
           unblockSubmitButton();
+
+          showErrorMessage();
         },
         new FormData(evt.target),
       );
 
       // uploadForm.submit();
-      // } else {
-      //   // console.log(' Не Можно отправлять');
     }
   });
 };
