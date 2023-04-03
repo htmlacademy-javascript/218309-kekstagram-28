@@ -3,9 +3,16 @@ import { renderPosts } from './thumbnail.js';
 import { validateForm, setUploadFormSubmit, closeUploadPicture } from './form.js';
 import { getData } from './api.js';
 
+import { debounce } from './util.js';
+// import { showFilters, getFilteredPictures } from './filters.js';
+// import { showAlert } from './util.js';
+
+
 // renderPosts(generateUserPhotoDescription());
 validateForm();
 
-getData(renderPosts);
+const debouncedRenderGallery = debounce(renderPosts);
+getData(debouncedRenderGallery);
 
 setUploadFormSubmit(closeUploadPicture);
+

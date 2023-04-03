@@ -1,4 +1,5 @@
 import { showAlert } from './util.js';
+import { showFilters } from './filters.js';
 
 const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 const Route = {
@@ -20,8 +21,9 @@ const getData = (onSuccess) => {
       }
       return response.json();
     })
-    .then((generateUserPhotoDescription) => {
-      onSuccess(generateUserPhotoDescription);
+    .then((generatePhoto) => {
+      onSuccess(generatePhoto);
+      showFilters(generatePhoto);
     })
     .catch(() => {
       showAlert(`${ErrorText.GET_DATA}`);
