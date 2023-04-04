@@ -1,11 +1,11 @@
-import { renderPosts } from './thumbnail.js';
-// import { generateUserPhotoDescription } from './mock.js';
-import { validateForm, setUploadFormSubmit, closeUploadPicture } from './form.js';
 import { getData } from './api.js';
-
-// renderPosts(generateUserPhotoDescription());
-validateForm();
+import { renderPosts } from './thumbnail.js';
+import { validateForm, setUploadFormSubmit, closeUploadPicture } from './form.js';
+import { showSelectedFile } from './upload-picture.js';
 
 getData(renderPosts);
-
+validateForm();
 setUploadFormSubmit(closeUploadPicture);
+showSelectedFile();
+
+

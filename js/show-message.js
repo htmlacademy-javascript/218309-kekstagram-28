@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 import { onUploadEscKeydown } from './form.js';
 
-const elementBody = document.querySelector('body');
+const bodyElement = document.querySelector('body');
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 const successElement = successMessage.cloneNode(true);
@@ -58,13 +58,13 @@ const onErrorButtonClick = () => {
 };
 
 const showSuccessMessage = () => {
-  elementBody.append(successElement);
+  bodyElement.append(successElement);
   document.addEventListener('keydown', onSuccessKeydown);
   document.addEventListener('click', onSuccessAnywhereClick);
 };
 
 const showErrorMessage = () => {
-  elementBody.append(errorElement);
+  bodyElement.append(errorElement);
   document.removeEventListener('keydown', onUploadEscKeydown);
   document.addEventListener('keydown', onErrorKeydown);
   document.addEventListener('click', onErrorAnywhereClick);

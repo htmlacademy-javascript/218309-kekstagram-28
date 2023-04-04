@@ -1,6 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
 
-//модуль с вспомогательными функциями;
 function getRandomNum(min, max) {
   const lower = Math.ceil(min);
   const upper = Math.floor(max);
@@ -30,4 +29,12 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export { getRandomNum, isEscapeKey, showAlert };
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { getRandomNum, isEscapeKey, showAlert, debounce };
