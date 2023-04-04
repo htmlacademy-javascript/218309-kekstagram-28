@@ -48,7 +48,11 @@ export const renderBigPicture = (similarPictures) => {
 
     const renderComments = () => {
       loadingComments += COMMENTS_PER_PORTION;
-      commentsElement.innerHTML = '';
+
+      while (commentsElement.firstChild) {
+        commentsElement.removeChild(commentsElement.firstChild);
+      }
+
       const commentsToShow = Math.min(post.comments.length, loadingComments);
 
       post.comments.forEach((comment, index) => {
@@ -62,7 +66,6 @@ export const renderBigPicture = (similarPictures) => {
           if (loadingComments >= post.comments.length) {
             commentsLoader.classList.add('hidden');
             loadingComments = post.comments.length;
-            // есть вопрос по удалению события и комментариев(они накапливаются)
             commentsLoader.removeEventListener('click', renderComments);
           } else {
             commentsLoader.classList.remove('hidden');
