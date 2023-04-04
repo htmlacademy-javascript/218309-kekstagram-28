@@ -52,16 +52,16 @@ const sortPost = (array, id) => {
   removePictures();
   switch (id) {
     case 'filter-default':
-      renderPosts(array, sortByDefault);
+      renderPosts(sortByDefault(array));
       break;
     case 'filter-discussed':
-      renderPosts(array, sortByComments);
+      renderPosts(sortByComments(array));
       break;
     case 'filter-random':
-      renderPosts(array, sortRandomly);
+      renderPosts(sortRandomly(array));
       break;
     default:
-      renderPosts(array, sortByDefault);
+      renderPosts(sortByDefault(array));
   }
 };
 

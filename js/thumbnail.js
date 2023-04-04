@@ -15,9 +15,7 @@ const createPost = ((post) => {
   return pictureElement;
 });
 
-const renderPosts = (similarPictures, sortArray) => {
-  // const filteredArray = sortArray(similarPictures);
-  // filteredArray.forEach((post) => picturesFragment.append(createPost(post)));
+const renderPosts = (similarPictures) => {
   similarPictures.forEach((post) => picturesFragment.append(createPost(post)));
 
   pictures.append(picturesFragment);

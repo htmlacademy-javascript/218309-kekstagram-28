@@ -1,13 +1,13 @@
 const SCALE_DEFAULT = 100;
 
-const imgUploadScale = document.querySelector('.img-upload__scale');
-const scaleControlSmaller = imgUploadScale.querySelector('.scale__control--smaller');
-const scaleControlBigger = imgUploadScale.querySelector('.scale__control--bigger');
-const scaleControlValue = imgUploadScale.querySelector('.scale__control--value');
-const imgUploadPreview = document.querySelector('.img-upload__preview img');
+const uploadScaleImg = document.querySelector('.img-upload__scale');
+const scaleControlSmaller = uploadScaleImg.querySelector('.scale__control--smaller');
+const scaleControlBigger = uploadScaleImg.querySelector('.scale__control--bigger');
+const scaleControlValue = uploadScaleImg.querySelector('.scale__control--value');
+const UploadPreviewImg = document.querySelector('.img-upload__preview img');
 
 const scaleImg = (value) => {
-  imgUploadPreview.style.transform = `scale(${value / 100})`;
+  UploadPreviewImg.style.transform = `scale(${value / 100})`;
   scaleControlValue.value = `${value}%`;
 };
 

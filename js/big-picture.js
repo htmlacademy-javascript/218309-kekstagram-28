@@ -4,7 +4,7 @@ export const renderBigPicture = (similarPictures) => {
   const picturesElement = document.querySelector('.pictures');
   const pictureElements = document.querySelectorAll('.picture');
   const commentsElement = document.querySelector('.social__comments');
-  const bigPicture = document.querySelector('.big-picture');
+  const bigPictureElement = document.querySelector('.big-picture');
   const bigPictureCloseElement = document.querySelector('.big-picture__cancel');
 
   const elBody = document.querySelector('body');
@@ -28,10 +28,10 @@ export const renderBigPicture = (similarPictures) => {
   };
 
   function openBigPicture(post) {
-    bigPicture.classList.remove('hidden');
-    bigPicture.querySelector('.big-picture__img img').src = post.url;
-    bigPicture.querySelector('.likes-count').textContent = post.likes;
-    bigPicture.querySelector('.social__caption').textContent = post.description;
+    bigPictureElement.classList.remove('hidden');
+    bigPictureElement.querySelector('.big-picture__img img').src = post.url;
+    bigPictureElement.querySelector('.likes-count').textContent = post.likes;
+    bigPictureElement.querySelector('.social__caption').textContent = post.description;
 
 
     const commentElement = commentsElement.querySelector('.social__comment').cloneNode(true);
@@ -80,7 +80,7 @@ export const renderBigPicture = (similarPictures) => {
   }
 
   function closeBigPicture() {
-    bigPicture.classList.add('hidden');
+    bigPictureElement.classList.add('hidden');
     document.removeEventListener('keydown', onBigPictureEscKeydown);
 
     elBody.classList.remove('modal-open');
