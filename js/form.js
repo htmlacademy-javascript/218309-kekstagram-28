@@ -1,6 +1,8 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, } from './util.js';
 import { resetScale } from './scale.js';
-import './slider.js';
+import { resetEffects } from './slider.js';
+import { sendData } from './api.js';
+import { showSuccessMessage, showErrorMessage } from './show-message.js';
 
 const imgUploadFile = document.querySelector('#upload-file');
 const imgUploadOpen = document.querySelector('.img-upload__overlay');
@@ -11,6 +13,7 @@ const textDescription = uploadForm.querySelector('.text__description');
 const textHashtags = uploadForm.querySelector('.text__hashtags');
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TEXT_TAG = 'Хэш-теги записаны неверно';
+const submitButton = document.querySelector('#upload-submit');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -18,16 +21,16 @@ const pristine = new Pristine(uploadForm, {
   errorTextClass: 'img-upload__error-text',
 });
 
-const onUploadEscKeydown = (evt) => {
+export const onUploadEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUploadPicture();
   }
 };
 
-function closeUploadPicture() {
+export function closeUploadPicture() {
   resetScale();
-  // resetEffects();
+  resetEffects();
   uploadForm.reset();
   pristine.reset();
   imgUploadOpen.classList.add('hidden');
@@ -35,7 +38,7 @@ function closeUploadPicture() {
   elBody.classList.remove('modal-open');
 }
 
-function openUpLoadPicture() {
+export function openUpLoadPicture() {
   imgUploadOpen.classList.remove('hidden');
   elBody.classList.add('modal-open');
   document.addEventListener('keydown', onUploadEscKeydown);
@@ -79,15 +82,42 @@ export const validateForm = () => {
   );
 };
 
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    // uploadForm.submit();
-    // console.log('Можно отправлять');
-  } else {
-    // console.log(' Не Можно отправлять');
-  }
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Опубликовываю...';
 };
 
-uploadForm.addEventListener('submit', onFormSubmit);
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+// ------Отправка формы------
+
+export const setUploadFormSubmit = (onSuccess) => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(
+        () => {
+          onSuccess();
+          unblockSubmitButton();
+
+          showSuccessMessage();
+        },
+        () => {
+          // showAlert('Не удалось отправить форму. Попробуй ещё раз');
+          unblockSubmitButton();
+
+          showErrorMessage();
+        },
+        new FormData(evt.target),
+      );
+
+      // uploadForm.submit();
+    }
+  });
+};
