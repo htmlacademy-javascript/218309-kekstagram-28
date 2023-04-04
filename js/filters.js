@@ -85,13 +85,3 @@ const setFilterClick = (array) => {
 
 export { setFilterClick, sortByDefault, showImgFilter };
 
-
-// const showFilters = () => {
-//   filters.classList.remove('img-filters--inactive');
-//   pictures = [...loadedPictures];
-//   setOnFilterClick(cb);
-// };
-
-// export { showFilters };
-
-
