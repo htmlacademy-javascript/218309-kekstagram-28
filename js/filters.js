@@ -8,7 +8,6 @@ const filters = document.querySelector('.img-filters');
 const filtersButton = document.querySelectorAll('.img-filters__button');
 const filtersForm = document.querySelector('.img-filters__form');
 
-
 const sortRandomly = (array) => {
   const comparePostsRandom = () => Math.random() - 0.5;
   return array

@@ -7,5 +7,3 @@ getData(renderPosts);
 validateForm();
 setUploadFormSubmit(closeUploadPicture);
 showSelectedFile();
-
-
