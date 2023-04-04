@@ -1,5 +1,5 @@
+import { sortByDefault, setFilterClick, showImgFilter } from './filters.js';
 import { showAlert } from './util.js';
-import { showFilters } from './filters.js';
 
 const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 const Route = {
@@ -23,7 +23,9 @@ const getData = (onSuccess) => {
     })
     .then((generatePhoto) => {
       onSuccess(generatePhoto);
-      showFilters(generatePhoto);
+      sortByDefault(generatePhoto);
+      setFilterClick(generatePhoto);
+      showImgFilter();
     })
     .catch(() => {
       showAlert(`${ErrorText.GET_DATA}`);

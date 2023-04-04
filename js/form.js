@@ -4,16 +4,17 @@ import { resetEffects } from './slider.js';
 import { sendData } from './api.js';
 import { showSuccessMessage, showErrorMessage } from './show-message.js';
 
-const imgUploadFile = document.querySelector('#upload-file');
-const imgUploadOpen = document.querySelector('.img-upload__overlay');
-const imgUploadClose = document.querySelector('.img-upload__cancel');
-const elBody = document.querySelector('body');
-const uploadForm = document.querySelector('#upload-select-image');
-const textDescription = uploadForm.querySelector('.text__description');
-const textHashtags = uploadForm.querySelector('.text__hashtags');
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TEXT_TAG = 'Хэш-теги записаны неверно';
-const submitButton = document.querySelector('#upload-submit');
+
+const uploadFileImg = document.querySelector('#upload-file');
+const uploadOpenImgElement = document.querySelector('.img-upload__overlay');
+const uploadCloseImgElement = document.querySelector('.img-upload__cancel');
+const bodyElement = document.querySelector('body');
+const uploadForm = document.querySelector('#upload-select-image');
+const textDescriptionElement = uploadForm.querySelector('.text__description');
+const textHashtagsElement = uploadForm.querySelector('.text__hashtags');
+const submitButtonElement = document.querySelector('#upload-submit');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -33,21 +34,21 @@ export function closeUploadPicture() {
   resetEffects();
   uploadForm.reset();
   pristine.reset();
-  imgUploadOpen.classList.add('hidden');
+  uploadOpenImgElement.classList.add('hidden');
   document.removeEventListener('keydown', onUploadEscKeydown);
-  elBody.classList.remove('modal-open');
+  bodyElement.classList.remove('modal-open');
 }
 
 export function openUpLoadPicture() {
-  imgUploadOpen.classList.remove('hidden');
-  elBody.classList.add('modal-open');
+  uploadOpenImgElement.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onUploadEscKeydown);
 }
 
 export const validateForm = () => {
 
-  imgUploadClose.addEventListener('click', closeUploadPicture);
-  imgUploadFile.addEventListener('change', openUpLoadPicture);
+  uploadCloseImgElement.addEventListener('click', closeUploadPicture);
+  uploadFileImg.addEventListener('change', openUpLoadPicture);
 
   const onKeyPressListener = (evt) => {
     if (evt.key === 'Escape') {
@@ -55,8 +56,8 @@ export const validateForm = () => {
     }
   };
 
-  textDescription.addEventListener('keydown', onKeyPressListener);
-  textHashtags.addEventListener('keydown', onKeyPressListener);
+  textDescriptionElement.addEventListener('keydown', onKeyPressListener);
+  textHashtagsElement.addEventListener('keydown', onKeyPressListener);
 
   const isValidTag = (tag) => VALID_HASHTAG.test(tag);
 
@@ -76,20 +77,20 @@ export const validateForm = () => {
   };
 
   pristine.addValidator(
-    textHashtags,
+    textHashtagsElement,
     validateTags,
     ERROR_TEXT_TAG,
   );
 };
 
 const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Опубликовываю...';
+  submitButtonElement.disabled = true;
+  submitButtonElement.textContent = 'Опубликовываю...';
 };
 
 const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
+  submitButtonElement.disabled = false;
+  submitButtonElement.textContent = 'Опубликовать';
 };
 
 // ------Отправка формы------
@@ -105,19 +106,14 @@ export const setUploadFormSubmit = (onSuccess) => {
         () => {
           onSuccess();
           unblockSubmitButton();
-
           showSuccessMessage();
         },
         () => {
-          // showAlert('Не удалось отправить форму. Попробуй ещё раз');
           unblockSubmitButton();
-
           showErrorMessage();
         },
         new FormData(evt.target),
       );
-
-      // uploadForm.submit();
     }
   });
 };

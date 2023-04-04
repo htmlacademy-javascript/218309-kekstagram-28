@@ -1,6 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
 
-//модуль с вспомогательными функциями;
 function getRandomNum(min, max) {
   const lower = Math.ceil(min);
   const upper = Math.floor(max);
