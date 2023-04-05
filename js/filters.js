@@ -3,10 +3,10 @@ import { debounce } from './util.js';
 
 const MAX_RANDOM_POSTS = 10;
 
-const filters = document.querySelector('.img-filters');
+const filtersElement = document.querySelector('.img-filters');
 
-const filtersButton = document.querySelectorAll('.img-filters__button');
-const filtersForm = document.querySelector('.img-filters__form');
+const filtersButtonElement = document.querySelectorAll('.img-filters__button');
+const filtersFormElement = document.querySelector('.img-filters__form');
 
 const sortRandomly = (array) => {
   const comparePostsRandom = () => Math.random() - 0.5;
@@ -32,11 +32,11 @@ const sortByDefault = (array) => {
 };
 
 const showImgFilter = () => {
-  filters.classList.remove('img-filters--inactive');
+  filtersElement.classList.remove('img-filters--inactive');
 };
 
 const clearFilter = (button) => {
-  filtersButton.forEach((element) =>
+  filtersButtonElement.forEach((element) =>
     element.classList.remove('img-filters__button--active')
   );
   button.classList.add('img-filters__button--active');
@@ -77,7 +77,7 @@ const onFilterClick = (array, evt) => {
 };
 
 const setFilterClick = (array) => {
-  filtersForm.addEventListener('click', (evt) => {
+  filtersFormElement.addEventListener('click', (evt) => {
     onFilterClick(array, evt);
   });
 };
