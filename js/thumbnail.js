@@ -1,6 +1,5 @@
 import { renderBigPicture } from './big-picture.js';
 
-
 const pictures = document.querySelector('.pictures');
 const pictureUsersTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesFragment = document.createDocumentFragment();
