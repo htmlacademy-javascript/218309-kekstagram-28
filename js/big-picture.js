@@ -1,5 +1,8 @@
 import { isEscapeKey } from './util.js';
 
+const COMMENTS_PER_PORTION = 5;
+const targetParent = '.picture';
+
 export const renderBigPicture = (similarPictures) => {
   const picturesElement = document.querySelector('.pictures');
   const pictureElements = document.querySelectorAll('.picture');
@@ -10,7 +13,8 @@ export const renderBigPicture = (similarPictures) => {
   const elBody = document.querySelector('body');
 
   picturesElement.addEventListener('click', (e) => {
-    const currentElement = e.target.parentElement;
+    const currentElement = e.target.closest(targetParent);
+
     const arr = Array.from(pictureElements);
     const index = arr.indexOf(currentElement);
     if (index >= 0) {
@@ -44,7 +48,6 @@ export const renderBigPicture = (similarPictures) => {
     const socialCommentCount = document.querySelector('.social__comment-count');
 
     let loadingComments = 0;
-    const COMMENTS_PER_PORTION = 5;
 
     const renderComments = () => {
       loadingComments += COMMENTS_PER_PORTION;
