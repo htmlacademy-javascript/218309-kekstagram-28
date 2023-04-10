@@ -1,4 +1,5 @@
 const SCALE_DEFAULT = 100;
+const MIN_SCALE = 25;
 
 const uploadScaleImg = document.querySelector('.img-upload__scale');
 const scaleControlSmaller = uploadScaleImg.querySelector('.scale__control--smaller');
@@ -13,18 +14,18 @@ const scaleImg = (value) => {
 
 const onScaleControlSmaller = () => {
   const currentValue = parseInt(scaleControlValue.value, 10);
-  let newValue = currentValue - 25;
-  if (newValue < 25) {
-    newValue = 25;
+  let newValue = currentValue - MIN_SCALE;
+  if (newValue < MIN_SCALE) {
+    newValue = MIN_SCALE;
   }
   scaleImg(newValue);
 };
 
 const onscaleControlBigger = () => {
   const currentValue = parseInt(scaleControlValue.value, 10);
-  let newValue = currentValue + 25;
-  if (newValue > 100) {
-    newValue = 100;
+  let newValue = currentValue + MIN_SCALE;
+  if (newValue > SCALE_DEFAULT) {
+    newValue = SCALE_DEFAULT;
   }
   scaleImg(newValue);
 };
