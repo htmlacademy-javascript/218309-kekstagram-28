@@ -2,6 +2,7 @@ import { renderPosts } from './thumbnail.js';
 import { debounce } from './util.js';
 
 const MAX_RANDOM_POSTS = 10;
+const RERENDER_DELAY = 500;
 
 const filtersElement = document.querySelector('.img-filters');
 
@@ -64,7 +65,7 @@ const sortPost = (array, id) => {
   }
 };
 
-const debouncedRenderPosts = debounce((array, id) => sortPost(array, id), 500);
+const debouncedRenderPosts = debounce((array, id) => sortPost(array, id), RERENDER_DELAY);
 
 const onFilterClick = (array, evt) => {
   const target = evt.target.closest('.img-filters__button');
